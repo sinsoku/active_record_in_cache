@@ -35,9 +35,14 @@ end
 You can call the `in_cache` method at the end of the chain.
 
 ```ruby
-def index
-  @articles = Article.published.in_cache
-end
+Article.all.in_cache
+# SELECT MAX("articles"."updated_at") FROM "articles"
+# SELECT "articles".* FROM "articles"
+#=> #<ActiveRecord::Relation ...>
+
+Article.all.in_cache
+# SELECT MAX("articles"."updated_at") FROM "articles"
+#=> #<ActiveRecord::Relation ...>
 ```
 
 Automatically check `maximum(:updated_at)` and use the cache if it exists.
