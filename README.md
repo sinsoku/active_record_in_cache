@@ -1,3 +1,5 @@
+[![Gem Version](https://badge.fury.io/rb/active_record_in_cache.svg)](https://badge.fury.io/rb/active_record_in_cache)
+
 # ActiveRecordInCache
 
 `ActiveRecordInCache` provides a method to execute SQL while automatically caching.
