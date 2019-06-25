@@ -1,10 +1,8 @@
 # ActiveRecordInCache
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/active_record_in_cache`. To experiment with that code, run `bin/console` for an interactive prompt.
+`ActiveRecordInCache` provides a method to execute SQL while automatically caching.
 
-TODO: Delete this and the text above, and describe your gem
-
-## Installation
+## :package: Installation
 
 Add this line to your application's Gemfile:
 
@@ -20,9 +18,33 @@ Or install it yourself as:
 
     $ gem install active_record_in_cache
 
-## Usage
+## :memo: Usage
 
-TODO: Write usage instructions here
+Add a line to include `ActiveRecordInCache::Methods` as below:
+
+```ruby
+class ApplicationRecord < ActiveRecord::Base
+  include ActiveRecordInCache::Methods
+
+  self.abstract_class = true
+end
+```
+
+You can call the `in_cache` method at the end of the chain.
+
+```ruby
+def index
+  @articles = Article.published.in_cache
+end
+```
+
+Automatically check `maximum(:updated_at)` and use the cache if it exists.
+
+## :star: Implementation
+
+The implementaiton is simple.
+
+[lib/active_record_in_cache.rb](lib/active_record_in_cache.rb)
 
 ## Development
 
@@ -32,7 +54,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/active_record_in_cache. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/sinsoku/active_record_in_cache. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
@@ -40,4 +62,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the ActiveRecordInCache project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/active_record_in_cache/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the ActiveRecordInCache project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/sinsoku/active_record_in_cache/blob/master/CODE_OF_CONDUCT.md).
