@@ -37,11 +37,7 @@ module ActiveRecordInCache
       #   Article.all.in_cache(expires_in: 5.minutes)
       #
       def in_cache(column = :updated_at, options = {})
-        name = [
-          all.to_sql,
-          all.maximum(column).to_s(:iso8601)
-        ].join('_')
-
+        name = "#{all.to_sql}_#{all.maximum(column)}"
         Rails.cache.fetch(name, options) { all }
       end
     end

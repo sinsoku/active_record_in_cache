@@ -13,7 +13,7 @@ RSpec.describe ActiveRecordInCache do
 
     rel = Article.all
     expect(rel.in_cache).to contain_exactly(article)
-    expect(Rails.cache).to be_exist "#{rel.to_sql}_#{article.updated_at.to_s(:iso8601)}"
+    expect(Rails.cache).to be_exist "#{rel.to_sql}_#{article.updated_at}"
   end
 
   it 'does not use cache after updating a new record' do
@@ -32,7 +32,7 @@ RSpec.describe ActiveRecordInCache do
 
     rel = Article.published
     expect(rel.in_cache(:published_at)).to contain_exactly(article)
-    expect(Rails.cache).to be_exist "#{rel.to_sql}_#{article.published_at.to_s(:iso8601)}"
+    expect(Rails.cache).to be_exist "#{rel.to_sql}_#{article.published_at}"
   end
 
   it 'returns records in SQL using joins' do
@@ -41,6 +41,12 @@ RSpec.describe ActiveRecordInCache do
 
     rel = Comment.joins(:article)
     expect(rel.in_cache).to contain_exactly(comment)
-    expect(Rails.cache).to be_exist "#{rel.to_sql}_#{comment.updated_at.to_s(:iso8601)}"
+    expect(Rails.cache).to be_exist "#{rel.to_sql}_#{comment.updated_at}"
+  end
+
+  it 'returns an empty array' do
+    rel = Article.all
+    expect(rel.in_cache).to eq []
+    expect(Rails.cache).to be_exist "#{rel.to_sql}_"
   end
 end
