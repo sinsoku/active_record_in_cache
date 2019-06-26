@@ -49,4 +49,13 @@ RSpec.describe ActiveRecordInCache do
     expect(rel.in_cache).to eq []
     expect(Rails.cache).to be_exist "#{rel.to_sql}_"
   end
+
+  it 'returns records using the custom key' do
+    article = Article.create
+
+    rel = Article.all
+    records = rel.in_cache { "#{maximum(:updated_at)}_v2" }
+    expect(records).to contain_exactly(article)
+    expect(Rails.cache).to be_exist "#{rel.to_sql}_#{article.updated_at}_v2"
+  end
 end
