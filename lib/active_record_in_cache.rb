@@ -15,11 +15,11 @@ module ActiveRecordInCache
       #   Article.all.in_cache
       #   # SELECT MAX("articles"."updated_at") FROM "articles"
       #   # SELECT "articles".* FROM "articles"
-      #   #=> #<ActiveRecord::Relation ...>
+      #   #=> [#<Article:0x0000000000000000>, ...]
       #
       #   Article.all.in_cache
       #   # SELECT MAX("articles"."updated_at") FROM "articles"
-      #   #=> #<ActiveRecord::Relation ...>
+      #   #=> [#<Article:0x0000000000000000>, ...]
       #
       # === column
       #
@@ -28,7 +28,7 @@ module ActiveRecordInCache
       #   Article.all.in_cache(:published_at)
       #   # SELECT MAX("articles"."published_at") FROM "articles"
       #   # SELECT "articles".* FROM "articles"
-      #   #=> #<ActiveRecord::Relation ...>
+      #   #=> [#<Article:0x0000000000000000>, ...]
       #
       # === options
       #
